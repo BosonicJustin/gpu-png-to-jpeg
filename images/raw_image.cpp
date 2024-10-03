@@ -52,3 +52,28 @@ void RawImage::to_ycbcr() {
 
   _encoding = YCbCr;
 }
+
+void RawImage::to_rgb() {
+  if (_encoding == RGB) {
+    return;
+  }
+
+  for (size_t y = 0; y < _height; ++y) {
+    for (size_t x = 0; x < _width; ++x) {
+      double Y = getPixel(x, y, Y_c);
+      double Pb = getPixel(x, y, Pb_c);
+      double Pr = getPixel(x, y, Pr_c);
+
+      /// TODO: Double-check math
+      double R = Y + Pr * (2 - 2 * K_R);
+      double G = Y - Pb * (K_B / K_G) * (2 - 2 * K_B) - P_R * (K_R / K_G) * (2 - 2 * K_R);
+      double B = Y - Pb * (2 - 2 * K_B);
+
+      setPixel(x, y, RED, R);
+      setPixel(x, y, GREEN, G);
+      setPixel(x, y, BLUE, B);
+    }
+  }
+
+  _encoding = RGB;
+}
