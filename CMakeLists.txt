@@ -14,6 +14,8 @@ add_executable(
         images/image_storagge_manager.cpp
         images/image_storagge_manager.h
         images/image_storagge_manager.h
+        images/raw_image.cpp
+        images/raw_image.h
 )
 
 # Link OpenCV libraries

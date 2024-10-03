@@ -7,7 +7,7 @@
 
 const int RGB_COUNT = 3;
 
-void ImageStorageManager::loadImage(const std::string& imagePath, unsigned char** imageData, int* width, int* height) {
+void ImageStorageManager::loadImage(const std::string& imagePath, double** imageData, int* width, int* height) {
   cv::Mat image = cv::imread(imagePath);
 
   if(image.empty()) {
@@ -23,8 +23,11 @@ void ImageStorageManager::loadImage(const std::string& imagePath, unsigned char*
   unsigned int imageSize = (*width) * (*height) * RGB_COUNT;
 
   /// Here we are taking a pointer to a block of memory and assigning to it exact size of our image
-  *imageData = new unsigned char[imageSize];
+  *imageData = new double [imageSize];
 
   /// Copying the data from the RGB image to our block of memory
-  std::memcpy(*imageData, image.data, imageSize * sizeof(unsigned char));
+  std::memcpy(*imageData, image.data, imageSize * sizeof(double));
+
+  /// Free up the memory of an image
+  image.release();
 }
