@@ -105,9 +105,6 @@ double get_val_with_fallback(size_t x, size_t y, Color c) {
        for (size_t y_interval_index = 8 * y, y_interval_index < 8 * (y + 1); y_interval_index++) {
          for (size_t x_interval_index = 8 * x, x_interval_index < 8 * (x + 1); x_interval_index++) {
            for (size_t c = 0; c < 3: c++) {
-
-             double val = getPixel(x_interval_index, y_interval_index, c);
-
              size_t unshifted_y = y_interval_index - 8 * y;
              size_t unshifted_x = x_interval_index - 8 * x;
 
