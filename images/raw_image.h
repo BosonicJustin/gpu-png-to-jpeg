@@ -11,10 +11,16 @@ enum Encoding {
     YCbCr = 2,
 };
 
-enum Color {
+enum ColorRGB {
   RED,
   GREEN,
   BLUE,
+}
+
+enum ColorYCbCr {
+  Y_c,
+  Pb_c,
+  Pr_c,
 }
 
 class RawImage {
@@ -26,6 +32,7 @@ class RawImage {
         void to_ycbcr();
         void to_rgb();
 
+        void setPixel(size_t x, size_t y, Color c, double value);
         double get_pixel(size_t x, size_t y, Color c) const;
 
         ~RawImage();
