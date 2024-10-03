@@ -16,6 +16,8 @@ add_executable(
         images/image_storagge_manager.h
         images/raw_image.cpp
         images/raw_image.h
+        compressor/macro_block.cpp
+        compressor/macro_block.h
 )
 
 # Link OpenCV libraries

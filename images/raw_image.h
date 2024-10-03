@@ -15,13 +15,13 @@ enum ColorRGB {
   RED,
   GREEN,
   BLUE,
-}
+};
 
 enum ColorYCbCr {
   Y_c,
   Pb_c,
   Pr_c,
-}
+};
 
 class RawImage {
     public:
@@ -34,6 +34,9 @@ class RawImage {
 
         void setPixel(size_t x, size_t y, Color c, double value);
         double get_pixel(size_t x, size_t y, Color c) const;
+
+        /// Now the splitting is implemented to be default 8x8 - no subsampling
+        **MacroBlock split_to_blocks();
 
         ~RawImage();
 

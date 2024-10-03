@@ -5,7 +5,7 @@
 class ImageStorageManager {
 
   public:
-    void loadImage(const std::string& imagePath, unsigned char** imageData, int* width, int* height);
+    void loadImage(const std::string& imagePath, float** imageData, int* width, int* height);
 
 
 };
