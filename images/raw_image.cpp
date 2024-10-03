@@ -1,5 +1,6 @@
 #include "raw_image.h"
 
+/// ITU-R BT.601 constant set
 float const K_R = 0.299;
 float const K_G = 0.587;
 float const K_B = 0.114;
@@ -29,6 +30,7 @@ void RawImage::setPixel(size_t x, size_t y, Color c, double value) {
   (*_imgData)[get_index(x, y, c)] = value;
 }
 
+/// https://en.wikipedia.org/wiki/YCbCr#RGB_conversion
 void RawImage::to_ycbcr() {
   if (_encoding == YCbCr) {
     return;
@@ -53,6 +55,7 @@ void RawImage::to_ycbcr() {
   _encoding = YCbCr;
 }
 
+/// https://en.wikipedia.org/wiki/YCbCr#RGB_conversion
 void RawImage::to_rgb() {
   if (_encoding == RGB) {
     return;
