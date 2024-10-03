@@ -4,3 +4,11 @@
 *.ptx
 *.cubin
 *.fatbin
+
+.cmake/
+.idea/
+Makefile
+Testing/
+cmake-build-debug/
+
+cmake_install.cmake
