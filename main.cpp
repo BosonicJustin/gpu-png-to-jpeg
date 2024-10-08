@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "image_storage_manager.h";
+#include "images/image_storagge_manager.h"
 
 int main() {
     size_t imageHeight = 0;
@@ -8,7 +8,9 @@ int main() {
     double *imageData = NULL;
     ImageStorageManager imageStorageManager;
 
-    imageStorageManager.loadImageFromFile("./static/leaf.jpg", &imageData, &imageHeight, &imageWidth);
+    imageStorageManager.loadImage("./static/leaf.png", &imageData, &imageHeight, &imageWidth);
+
+    std::cout << "Hello" << std::endl;
 
     return 0;
 }
