@@ -50,7 +50,7 @@ private:
 
     std::vector<double> _get_zig_zag_frequency(size_t c);
 
-    static std::pair<std::vector<double>, std::vector<size_t>> MacroBlock::_run_length_encode_frequency(
+    std::pair<std::vector<double>, std::vector<size_t>> _run_length_encode_frequency(
         const std::vector<double>& zig_zag_frequency
     );
 
