@@ -3,10 +3,12 @@
 
 #include <string>
 
+#include "raw_image.h"
+
 class ImageStorageManager {
 
   public:
-    void loadImage(const std::string& imagePath, double** imageData, size_t* width, size_t* height);
+    static RawImage loadImage(const std::string& imagePath);
 
 
 };

@@ -1,10 +1,13 @@
 #include "raw_image.h"
 #include "../compressor/macro_block.h"
 
+#include <iostream>
+
 /// ITU-R BT.601 constant set
 float const K_R = 0.299;
 float const K_G = 0.587;
 float const K_B = 0.114;
+
 
 
 //bool is_index_out_of_bound(size_t x, size_t y, Color c) {
@@ -20,7 +23,12 @@ float const K_B = 0.114;
 //}
 
 RawImage::~RawImage() {
-  delete[] _imageData;
+        if (_imageData) {
+            for (size_t i = 0; i < _height; ++i) {
+                delete[] _imageData[i];
+            }
+            delete[] _imageData;
+        }
 }
 
 //double RawImage::getPixel(size_t x, size_t y, Color c) {

@@ -4,12 +4,7 @@
 #include "images/raw_image.h"
 
 int main() {
-    size_t imageHeight = 0;
-    size_t imageWidth = 0;
-    double *imageData = nullptr;
-    ImageStorageManager imageStorageManager;
-
-    imageStorageManager.loadImage("./static/leaf.png", &imageData, &imageHeight, &imageWidth);
+    RawImage raw_image = ImageStorageManager::loadImage("./static/leaf.png");
 
     // std::cout << imageHeight << " " << imageWidth << std::endl;
     //

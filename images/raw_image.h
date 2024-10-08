@@ -7,6 +7,7 @@
 
 #include <stddef.h>
 
+/// TODO MOVE TO CONSTATNS
 enum Encoding {
     RGB = 1,
     YCbCr = 2,
@@ -27,7 +28,7 @@ enum ColorYCbCr {
 class RawImage {
     public:
         RawImage(
-          double** imgData, Encoding enc, size_t height, size_t width
+          double** imgData, const Encoding enc, const size_t height, const size_t width
           ): _imageData(imgData), _encoding(enc), _height(height), _width(width) {};
 
 //        void to_ycbcr();
