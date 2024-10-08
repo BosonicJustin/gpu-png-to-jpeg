@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "images/image_storagge_manager.h"
+#include "images/image_storage_manager.h"
 #include "images/raw_image.h"
 
 int main() {

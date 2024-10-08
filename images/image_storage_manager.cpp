@@ -2,7 +2,7 @@
 // Created by Justin Zaliaduonis on 10/3/24.
 //
 
-#include "image_storagge_manager.h"
+#include "image_storage_manager.h"
 #include <opencv2/opencv.hpp>
 
 /// TODO move to some global constants
