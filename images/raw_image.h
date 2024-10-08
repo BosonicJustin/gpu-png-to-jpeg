@@ -5,6 +5,10 @@
 #include "../general/colors.h"
 #include "../general/encoding.h"
 
+#include "../compressor/macro_block.h"
+
+#include <vector>
+
 class RawImage {
 public:
     RawImage(Encoding enc, size_t height, size_t width);
@@ -28,6 +32,8 @@ public:
     RawImage& operator=(RawImage&& other) noexcept;
 
     void to_ycbcr();
+
+    std::vector<MacroBlock> split_to_macro_blocks() const;
 
 private:
     size_t _get_index(size_t x, size_t y, ColorRGB c) const;

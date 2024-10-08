@@ -17,6 +17,7 @@ add_executable(
         images/raw_image.h
 		general/colors.h
 		general/encoding.h
+		compressor/macro_block.cpp
 		#   compressor/macro_block.cpp
       #  compressor/macro_block.h
 )
