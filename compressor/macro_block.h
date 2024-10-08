@@ -3,6 +3,7 @@
 
 #include <cstddef>
 
+
 class MacroBlock {
 public:
     static constexpr size_t CHANNELS = 3;
@@ -27,6 +28,8 @@ public:
     size_t getWidth() const;
     size_t getHeight() const;
 
+    MacroBlock to_frequency_domain() const;
+
 private:
     double* _blockData;
     size_t _width;
@@ -35,6 +38,8 @@ private:
     int _numberOfInsertions;
 
     size_t flattenIndex(size_t x, size_t y, size_t channel) const;
+
+    double _get_fequency_value(size_t u, size_t v, size_t channel) const;
 };
 
 #endif //MACRO_BLOCK_H
