@@ -14,8 +14,8 @@ enum ColorRGB {
 
 enum ColorYCbCr {
     Y_c,
-    Pb_c,
-    Pr_c
+    Cb_c,
+    Cr_c
 };
 
 constexpr size_t RGB_COUNT = 3;

@@ -1,8 +1,14 @@
 #include "raw_image.h"
 
-#include <algorithm>
 #include <stdexcept>
 #include <cstring> // for std::memset
+
+// Constants for YCbCr conversion (BT.601 standard)
+// https://en.wikipedia.org/wiki/YCbCr#ITU-R_BT.601_conversion
+// Saving the constant at compile time
+constexpr double KR = 0.299;
+constexpr double KG = 0.587;
+constexpr double KB = 0.114;
 
 RawImage::RawImage(const Encoding enc, const size_t height, const size_t width)
     : _encoding(enc), _height(height), _width(width) {
@@ -84,4 +90,30 @@ RawImage& RawImage::operator=(RawImage&& other) noexcept {
         other._imageData = nullptr;
     }
     return *this;
+}
+
+void RawImage::to_ycbcr() {
+    if (_encoding == YCbCr) {
+        return;
+    }
+
+    for (size_t y = 0; y < _height; ++y) {
+        for (size_t x = 0; x < _width; ++x) {
+            double R = get_pixel(x, y, RED);
+            double G = get_pixel(x, y, GREEN);
+            double B = get_pixel(x, y, BLUE);
+
+            // Convert to YCbCr
+            double Y = KR * R + KG * G + KB * B;
+            double Cb = 0.5 * ((B - Y) / (1.0 - KB));
+            double Cr = 0.5 * ((R - Y) / (1.0 - KR));
+
+            // Store YCbCr values
+            set_pixel(x, y, Y_c, Y);
+            set_pixel(x, y, Cb_c, Cb);
+            set_pixel(x, y, Cr_c, Cr);
+        }
+    }
+
+    _encoding = YCbCr;
 }

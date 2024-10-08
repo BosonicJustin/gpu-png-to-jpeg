@@ -6,5 +6,7 @@
 int main() {
     RawImage raw_image = ImageStorageManager::loadImage("./static/leaf.png");
 
+    raw_image.to_ycbcr();
+
     return 0;
 }

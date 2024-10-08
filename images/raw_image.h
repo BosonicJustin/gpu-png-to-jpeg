@@ -7,7 +7,7 @@
 
 class RawImage {
 public:
-    RawImage(const Encoding enc, const size_t height, const size_t width);
+    RawImage(Encoding enc, size_t height, size_t width);
 
     double get_pixel(size_t x, size_t y, ColorRGB c) const;
     double get_pixel(size_t x, size_t y, ColorYCbCr c) const;
@@ -26,6 +26,8 @@ public:
     // Allow moving
     RawImage(RawImage&& other) noexcept;
     RawImage& operator=(RawImage&& other) noexcept;
+
+    void to_ycbcr();
 
 private:
     size_t _get_index(size_t x, size_t y, ColorRGB c) const;
