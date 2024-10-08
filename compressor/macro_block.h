@@ -2,6 +2,7 @@
 #define MACRO_BLOCK_H
 
 #include <cstddef>
+#include <vector>
 
 
 class MacroBlock {
@@ -30,6 +31,8 @@ public:
 
     MacroBlock to_frequency_domain() const;
 
+    void quantize() const;
+
 private:
     double* _blockData;
     size_t _width;
@@ -37,9 +40,21 @@ private:
     size_t _index;
     int _numberOfInsertions;
 
-    size_t flattenIndex(size_t x, size_t y, size_t channel) const;
+    size_t _flatten_index(size_t x, size_t y, size_t channel) const;
 
     double _get_fequency_value(size_t u, size_t v, size_t channel) const;
+
+    /// Quantization matrix
+    std::vector<int> Q = {
+        16, 11, 10, 16, 24, 40, 51, 61,
+        12, 12, 14, 19, 26, 58, 60, 55,
+        14, 13, 16, 24, 40, 57, 69, 56,
+        14, 17, 22, 29, 51, 87, 80, 62,
+        18, 22, 37, 56, 68, 109, 103, 77,
+        24, 35, 55, 64, 81, 104, 113, 92,
+        49, 64, 78, 87, 103, 121, 120, 101,
+        72, 92, 95, 98, 112, 100, 103, 99
+    };
 };
 
 #endif //MACRO_BLOCK_H

@@ -9,8 +9,9 @@ int main() {
 
     std::vector<MacroBlock> blocks = raw_image.split_to_macro_blocks();
 
-    for (auto & block : blocks) {
+    for (auto &block : blocks) {
         block = block.to_frequency_domain();
+        block.quantize();
     }
 
     return 0;

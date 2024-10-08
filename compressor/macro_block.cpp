@@ -30,6 +30,18 @@ double MacroBlock::_get_fequency_value(size_t u, size_t v, size_t channel) const
     return f;
 }
 
+void MacroBlock::quantize() const {
+    for (size_t x = 0; x < _width; ++x) {
+        for (size_t y = 0; y < _height; ++y) {
+            int q = Q[y * 8 + x];
+
+            for (size_t c = 0 ; c < 3; ++c) {
+                _blockData[_flatten_index(x, y, c)] = std::round(getData(x, y, c) / static_cast<double>(q));;
+            }
+        }
+    }
+}
+
 MacroBlock MacroBlock::to_frequency_domain() const {
     MacroBlock block(_width, _height, _index);
 
@@ -77,7 +89,7 @@ MacroBlock& MacroBlock::operator=(MacroBlock&& other) noexcept {
     return *this;
 }
 
-size_t MacroBlock::flattenIndex(size_t x, size_t y, size_t channel) const {
+size_t MacroBlock::_flatten_index(size_t x, size_t y, size_t channel) const {
     return (y * _width + x) * CHANNELS + channel;
 }
 
@@ -85,7 +97,7 @@ void MacroBlock::setData(size_t x, size_t y, size_t channel, double value) {
     if (x >= _width || y >= _height || channel >= CHANNELS) {
         throw std::out_of_range("Coordinates out of range");
     }
-    size_t index = flattenIndex(x, y, channel);
+    size_t index = _flatten_index(x, y, channel);
     _blockData[index] = value;
     ++_numberOfInsertions;
 }
@@ -102,7 +114,7 @@ double MacroBlock::getData(size_t x, size_t y, size_t channel) const {
     if (x >= _width || y >= _height || channel >= CHANNELS) {
         throw std::out_of_range("Coordinates out of range");
     }
-    size_t index = flattenIndex(x, y, channel);
+    size_t index = _flatten_index(x, y, channel);
     return _blockData[index];
 }
 
