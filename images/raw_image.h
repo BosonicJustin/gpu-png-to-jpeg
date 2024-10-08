@@ -1,52 +1,41 @@
-//
-// Created by Justin Zaliaduonis on 10/3/24.
-//
-
 #ifndef RAW_IMAGE_H
 #define RAW_IMAGE_H
 
-#include <stddef.h>
-
-/// TODO MOVE TO CONSTATNS
-enum Encoding {
-    RGB = 1,
-    YCbCr = 2,
-};
-
-enum ColorRGB {
-  RED,
-  GREEN,
-  BLUE,
-};
-
-enum ColorYCbCr {
-  Y_c,
-  Pb_c,
-  Pr_c,
-};
+#include <cstddef>
+#include "../general/colors.h"
+#include "../general/encoding.h"
 
 class RawImage {
-    public:
-        RawImage(
-          double** imgData, const Encoding enc, const size_t height, const size_t width
-          ): _imageData(imgData), _encoding(enc), _height(height), _width(width) {};
+public:
+    RawImage(const Encoding enc, const size_t height, const size_t width);
 
-//        void to_ycbcr();
-//        void to_rgb();
+    double get_pixel(size_t x, size_t y, ColorRGB c) const;
+    double get_pixel(size_t x, size_t y, ColorYCbCr c) const;
+    void set_pixel(size_t x, size_t y, ColorRGB c, double value);
+    void set_pixel(size_t x, size_t y, ColorYCbCr c, double value);
 
-//        void setPixel(size_t x, size_t y, Color c, double value);
-//        double get_pixel(size_t x, size_t y, Color c) const;
+    size_t get_height() const;
+    size_t get_width() const;
 
-        /// Now the splitting is implemented to be default 8x8 - no subsampling
-//        **MacroBlock split_to_blocks();
+    ~RawImage();
 
-        ~RawImage();
+    // Prevent copying
+    RawImage(const RawImage&) = delete;
+    RawImage& operator=(const RawImage&) = delete;
 
-    private:
-        double** _imageData;
-        Encoding _encoding;
-        size_t _height, _width;
+    // Allow moving
+    RawImage(RawImage&& other) noexcept;
+    RawImage& operator=(RawImage&& other) noexcept;
+
+private:
+    size_t _get_index(size_t x, size_t y, ColorRGB c) const;
+    size_t _get_index(size_t x, size_t y, ColorYCbCr c) const;
+    size_t _get_index_unsafe(size_t x, size_t y, size_t c) const;
+    bool _is_index_out_of_bounds(size_t x, size_t y, size_t c) const;
+
+    double* _imageData;
+    Encoding _encoding;
+    size_t _height, _width;
 };
 
-
-#endif
+#endif // RAW_IMAGE_H

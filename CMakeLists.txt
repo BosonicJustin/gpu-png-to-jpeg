@@ -15,7 +15,9 @@ add_executable(
 		images/image_storage_manager.h
         images/raw_image.cpp
         images/raw_image.h
-     #   compressor/macro_block.cpp
+		general/colors.h
+		general/encoding.h
+		#   compressor/macro_block.cpp
       #  compressor/macro_block.h
 )
 
