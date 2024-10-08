@@ -14,3 +14,7 @@ cmake-build-debug/
 cmake_install.cmake
 
 .DS_Store
+
+CMakeCache.txt
+CMakeFiles/
+png-to-jpeg
