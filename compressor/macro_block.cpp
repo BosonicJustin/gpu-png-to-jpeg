@@ -3,6 +3,7 @@
 
 #include <cmath>
 
+
 double double_cos(const size_t x, const size_t y, const size_t u, const size_t v) {
     return cos((2 * x + 1) * u * M_PI / 16) * cos((2 * y + 1) * v * M_PI / 16);
 }
@@ -15,7 +16,7 @@ double alpha(const size_t u) {
     return 1;
 }
 
-double MacroBlock::_get_fequency_value(size_t u, size_t v, size_t channel) const {
+double MacroBlock::_get_frequency_value(size_t u, size_t v, size_t channel) const {
     double f = 0;
     double alpha_1 = alpha(u);
     double alpha_2 = alpha(v);
@@ -49,7 +50,7 @@ MacroBlock MacroBlock::to_frequency_domain() const {
     for (size_t y = 0; y < _height; ++y) {
         for (size_t x = 0; x < _width; ++x) {
             for (size_t channel = 0; channel < 3; ++channel) {
-                block.setData(x, y, channel, _get_fequency_value(x, y, channel));
+                block.setData(x, y, channel, _get_frequency_value(x, y, channel));
             }
         }
     }
@@ -139,4 +140,50 @@ size_t MacroBlock::getWidth() const {
 
 size_t MacroBlock::getHeight() const {
     return _height;
+}
+
+std::vector<double> MacroBlock::_get_zig_zag_frequency(const size_t c) {
+    std::vector<double> zig_zag_frequency(64);
+
+    for (size_t i = 0; i < 64; ++i) {
+        zig_zag_frequency[i] = _blockData[ZIG_ZAG_ORDER[i] * CHANNELS + c];
+    }
+
+    return zig_zag_frequency;
+}
+
+std::pair<std::vector<double>, std::vector<size_t>> MacroBlock::_run_length_encode_frequency(
+    const std::vector<double>& zig_zag_frequency
+) {
+    std::vector<double> frequencies;
+    std::vector<size_t> repetitions;
+
+    frequencies.push_back(zig_zag_frequency[0]);
+    repetitions.push_back(1);
+
+    for (size_t i = 1; i < zig_zag_frequency.size(); ++i) {
+        if (zig_zag_frequency[i] == frequencies.back()) {
+            repetitions.back() += 1;
+        } else {
+            frequencies.push_back(zig_zag_frequency[i]);
+            repetitions.push_back(1);
+        }
+    }
+
+    if (frequencies.size() != repetitions.size()) {
+        throw std::runtime_error("Size mismatch");
+    }
+
+    return std::make_pair(frequencies, repetitions);
+}
+
+std::vector<std::pair<std::vector<double>, std::vector<size_t>>> MacroBlock::encode() {
+    std::vector<std::pair<std::vector<double>, std::vector<size_t>>> zz_freq_pairs_per_color(3);
+
+    for (size_t c = 0; c < 3; ++c) {
+        auto zig_zag_frequency = _get_zig_zag_frequency(c);
+        zz_freq_pairs_per_color[c] = _run_length_encode_frequency(zig_zag_frequency);
+    }
+
+    return zz_freq_pairs_per_color;
 }

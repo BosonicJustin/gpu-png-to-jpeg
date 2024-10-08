@@ -33,6 +33,10 @@ public:
 
     void quantize() const;
 
+    std::vector<std::pair<std::vector<double>, std::vector<size_t>>> encode();
+
+    /// [color] -> ([frequencies], [repeated])
+
 private:
     double* _blockData;
     size_t _width;
@@ -42,7 +46,13 @@ private:
 
     size_t _flatten_index(size_t x, size_t y, size_t channel) const;
 
-    double _get_fequency_value(size_t u, size_t v, size_t channel) const;
+    double _get_frequency_value(size_t u, size_t v, size_t channel) const;
+
+    std::vector<double> _get_zig_zag_frequency(size_t c);
+
+    static std::pair<std::vector<double>, std::vector<size_t>> MacroBlock::_run_length_encode_frequency(
+        const std::vector<double>& zig_zag_frequency
+    );
 
     /// Quantization matrix
     std::vector<int> Q = {
@@ -54,6 +64,17 @@ private:
         24, 35, 55, 64, 81, 104, 113, 92,
         49, 64, 78, 87, 103, 121, 120, 101,
         72, 92, 95, 98, 112, 100, 103, 99
+    };
+
+    const std::array<size_t, 64> ZIG_ZAG_ORDER = {
+        0,  1,  5,  6, 14, 15, 27, 28,
+        2,  4,  7, 13, 16, 26, 29, 42,
+        3,  8, 12, 17, 25, 30, 41, 43,
+        9, 11, 18, 24, 31, 40, 44, 53,
+       10, 19, 23, 32, 39, 45, 52, 54,
+       20, 22, 33, 38, 46, 51, 55, 60,
+       21, 34, 37, 47, 50, 56, 59, 61,
+       35, 36, 48, 49, 57, 58, 62, 63
     };
 };
 
