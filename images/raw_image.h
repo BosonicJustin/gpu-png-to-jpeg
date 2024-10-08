@@ -42,6 +42,7 @@ private:
     bool _is_index_out_of_bounds(size_t x, size_t y, size_t c) const;
 
     double* _imageData;
+
     Encoding _encoding;
     size_t _height, _width;
 };

@@ -35,8 +35,6 @@ public:
 
     std::vector<std::pair<std::vector<double>, std::vector<size_t>>> encode();
 
-    /// [color] -> ([frequencies], [repeated])
-
 private:
     double* _blockData;
     size_t _width;
