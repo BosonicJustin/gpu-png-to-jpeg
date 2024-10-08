@@ -11,14 +11,14 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 add_executable(
         png-to-jpeg
         main.cpp
-	images/image_storagge_manager.cpp
-	images/image_storagge_manager.h
-  #      images/image_storagge_manager.h
-   #     images/raw_image.cpp
-    #    images/raw_image.h
+		images/image_storagge_manager.cpp
+		images/image_storagge_manager.h
+        images/raw_image.cpp
+        images/raw_image.h
      #   compressor/macro_block.cpp
       #  compressor/macro_block.h
 )
 
 # Link OpenCV libraries
 target_link_libraries(png-to-jpeg ${OpenCV_LIBS})
+

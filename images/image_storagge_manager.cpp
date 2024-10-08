@@ -5,6 +5,7 @@
 #include "image_storagge_manager.h"
 #include <opencv2/opencv.hpp>
 
+/// TODO move to some global constants
 const int RGB_COUNT = 3;
 
 #include <iostream>
